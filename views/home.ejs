@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL Shortener</title>
+  </head>
+  <body>
+    <h1>URL Shortener</h1>
+    <form method="post" action="/url">
+      <input type="text" name="url" placeholder="https://example.com" />
+      <button type="submit">Generate</button>
+    </form>
+    <div>
+      <% if (locals.id) { %>
+      <a>URL Generated: http://localhost:8001/url/<%= id %></a>
+      <!-- Ensure the port is correct -->
+      <% } else { %>
+      <p>Enter a URL</p>
+      <% } %>
+    </div>
+
+    <div>
+      <% if (locals.allusers) { %>
+      <!-- Consistent variable name -->
+      <table>
+        <thead>
+          <tr>
+            <th>SNo.</th>
+            <th>Short URL</th>
+            <th>Redirect URL</th>
+            <th>Clicks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% allusers.forEach((alluser , index) => { %>
+          <!-- Consistent variable name -->
+          <tr>
+            <td><%= index + 1 %></td>
+            <td>
+              <a href="http://localhost:8001/url/<%= alluser.shortID %>"
+                ><%= alluser.shortID %></a
+              >
+            </td>
+            <!-- Ensure the port is correct and add a link -->
+            <td><%= alluser.redirectURL %></td>
+            <td><%= alluser.visitedHistory.length %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
+    </div>
+  </body>
+</html>
